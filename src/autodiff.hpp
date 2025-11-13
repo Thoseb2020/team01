@@ -2,7 +2,7 @@
 #define AUTODIFF_HPP
 
 #include <array>  
-
+#include <cmath>
 namespace ASC_ode
 {
 

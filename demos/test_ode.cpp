@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream> 
-
+#include <memory>
 #include <nonlinfunc.hpp>
 #include <timestepper.hpp>
 
