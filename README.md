@@ -1,7 +1,15 @@
-# ASC-ODE
-A package for solving ordinary differential equations
+# Mass Spring System solver
 
-Read the [documentation](https://tuwien-asc.github.io/ASC-ODE/intro.html)
+## Usage
+After cloning first run:
 
-Find theory behind here: https://jschoeberl.github.io/IntroSC/ODEs/ODEs.html
+git submodule update --init
 
+
+Then build the project with cmake and run the following line in the build folder:
+
+./test_ode > ../demos/output_test_ode.txt
+
+Go to the demos folder and run:
+
+python3 plotmassspring.py

@@ -11,8 +11,9 @@ plt.ylabel('value')
 plt.title('Mass-Spring System Time Evolution')
 plt.legend()
 plt.grid()
+plt.savefig("Time_evolution.png",dpi=300)
 plt.show()
-
+plt.close()
 
 plt.plot(data[:,1], data[:,2], label='phase plot')
 plt.xlabel('position')
@@ -20,5 +21,6 @@ plt.ylabel('velocity')
 plt.title('Mass-Spring System Phase Plot')
 plt.legend()
 plt.grid()
+plt.savefig("Phase_plot.png",dpi=300)
 plt.show()
-
+plt.close()
