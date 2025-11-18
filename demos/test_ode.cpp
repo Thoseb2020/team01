@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
   {
     stepper = std::make_unique<ImprovedEuler>(rhs);
   }else{
-    std::cout << "error";
+    std::cout << "Use explicit or improved method, for example: ./runmassspring.sh 4 100 explicit";
   }
   
   //

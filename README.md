@@ -16,4 +16,9 @@ cd ..
 
 You can then run and plot the mass-spring system for a given time and nr of steps automatically with the shell script "runmassspring.sh":
 
-~/team01$ ./runmassspring.sh 4 100
+~/team01$ ./runmassspring.sh tend_relativetopi steps method
+
+tend_relativetopi and steps are doubles, method is either "explicit" or "improved", for example:
+
+
+~/team01$ ./runmassspring.sh 4 100 explicit

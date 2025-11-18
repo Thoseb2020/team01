@@ -41,8 +41,9 @@ namespace ASC_ode
     : TimeStepper(rhs), m_vecf(rhs->dimF()) {}
     void DoStep(double tau, VectorView<double> y) override
     {
-      this->m_rhs->evaluate(y, m_vecf);
-      //VectorView<double> y_tilde = y + 0.5* tau * m_vecf;
+      Vector<double> y_tilde(y.size());
+      y_tilde = y + 0.5 *tau * m_vecf;
+      this->m_rhs->evaluate(y_tilde, m_vecf);
       y += tau * m_vecf;
     }
   };
