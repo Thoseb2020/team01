@@ -33,6 +33,20 @@ namespace ASC_ode
     }
   };
 
+  class ImprovedEuler : public TimeStepper
+  {
+    Vector<> m_vecf;
+  public:
+    ImprovedEuler(std::shared_ptr<NonlinearFunction> rhs) 
+    : TimeStepper(rhs), m_vecf(rhs->dimF()) {}
+    void DoStep(double tau, VectorView<double> y) override
+    {
+      this->m_rhs->evaluate(y, m_vecf);
+      //VectorView<double> y_tilde = y + 0.5* tau * m_vecf;
+      y += tau * m_vecf;
+    }
+  };
+
   class ImplicitEuler : public TimeStepper
   {
     std::shared_ptr<NonlinearFunction> m_equ;

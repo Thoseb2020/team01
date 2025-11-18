@@ -38,6 +38,7 @@ int main(int argc, char* argv[])
 {
   double tend_relative = atof(argv[1]);
   double steps = atoi(argv[2]);
+  std::string algorithm = argv[3];
 
   double tend = tend_relative*M_PI; //standard: 4*M_PI
   //int steps = 10000;  //standard: 100
@@ -46,7 +47,18 @@ int main(int argc, char* argv[])
   Vector<> y = { 1, 0 };  // initializer list
   auto rhs = std::make_shared<MassSpring>(1.0, 1.0);
   
-  ExplicitEuler stepper(rhs);
+  //Choose method:
+  std::unique_ptr<TimeStepper> stepper;
+  if(algorithm=="explicit"){
+    stepper = std::make_unique<ExplicitEuler>(rhs);
+  }else if(algorithm=="improved")
+  {
+    stepper = std::make_unique<ImprovedEuler>(rhs);
+  }else{
+    std::cout << "error";
+  }
+  
+  //
   // ImplicitEuler stepper(rhs);
 
   std::ofstream outfile ("output_test_ode.txt");
@@ -55,7 +67,7 @@ int main(int argc, char* argv[])
 
   for (int i = 0; i < steps; i++)
   {
-     stepper.DoStep(tau, y);
+     stepper->DoStep(tau, y);
 
      std::cout << (i+1) * tau << "  " << y(0) << " " << y(1) << std::endl;
      outfile << (i+1) * tau << "  " << y(0) << " " << y(1) << std::endl;
