@@ -15,4 +15,3 @@ target_link_libraries (test_ode PUBLIC nanoblas)
 
 add_executable (demo_autodiff demos/demo_autodiff.cpp)
 target_link_libraries (demo_autodiff PUBLIC nanoblas)
-

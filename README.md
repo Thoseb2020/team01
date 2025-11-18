@@ -1,15 +1,19 @@
 # Mass Spring System solver
 
 ## Usage
-After cloning first run:
+After cloning first run, run in the command line:
 
 git submodule update --init
 
+Then build the project with cmake:
 
-Then build the project with cmake and run the following line in the build folder:
+mkdir build
+cd build
+cmake ..
+make
+cd ..
 
-./test_ode > ../demos/output_test_ode.txt
 
-Go to the demos folder and run:
+You can then run and plot the mass-spring system for a given time and nr of steps automatically with the shell script "runmassspring.sh":
 
-python3 plotmassspring.py
+~/team01$ ./runmassspring.sh 4 100
