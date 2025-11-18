@@ -34,10 +34,13 @@ public:
 };
 
 
-int main()
+int main(int argc, char* argv[])
 {
-  double tend = 4*M_PI; //standard: 4*M_PI
-  int steps = 100;  //standard: 100
+  double tend_relative = atof(argv[1]);
+  double steps = atoi(argv[2]);
+
+  double tend = tend_relative*M_PI; //standard: 4*M_PI
+  //int steps = 10000;  //standard: 100
   double tau = tend/steps;
 
   Vector<> y = { 1, 0 };  // initializer list
