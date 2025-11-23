@@ -122,7 +122,9 @@ That change has introduced a major improvement; however, over time we still cann
   <img src="demos/plots/improved/improved Time_evolution_60 pi_5000 steps_.png" alt="Phase_plot" width="300">
 </div>
 
-Introducing a significant increase in the number of timesteps—something that would completely destabilize the classical explicit Euler method—has remarkably stabilized the behavior of the Improved Euler method, both in terms of velocity and position over time. There is no noticeable dissipative or dispersive error, and the phase plot shows that the position-velocity relationship is ideally conserved as an elliptical trajectory. We cannot be sure that any diffusive of dispersive error still not exists, which could grow if the simulation were extended further; however, the simulation was concluded at this step. Nevertheless, this behavior demonstrates that the system is stable. In other words, according to the rules of the stability definition, we can find a significantly small timestep that will make the solution stable while times go to infinity.
+Introducing a significant increase in the number of timesteps—something that would completely destabilize the classical explicit Euler method—has remarkably stabilized the behavior of the Improved Euler method, both in terms of velocity and position over time. There is no noticeable dissipative or dispersive error, and the phase plot shows that the position-velocity relationship is ideally conserved as an elliptical trajectory. We cannot be sure that any diffusive of dispersive error still not exists, which could grow if the simulation were extended further. Each of our attempts has decreased timestep with grow of interval. However, the simulation was concluded at this step.
+
+ Nevertheless, we cannot assume the solution is stable. In other words, according to the rules of the stability definition, we could be able to find a significantly small timestep that will make the solution stable while times go to infinity - we could not find such timestep.
 
 
 $$
