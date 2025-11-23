@@ -17,6 +17,7 @@ Where:
 
 
 Our system of mass-sprint is described by the following relation:
+
 $$
 y_{0}' = y_1
 $$
