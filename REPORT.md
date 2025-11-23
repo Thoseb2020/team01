@@ -37,7 +37,7 @@ With the original settings, we obtain the following results:
   <img src="demos/plots/explicit/explicit Phase_plot_4 pi_100 steps_.png" alt="Phase_plot" width="300">
 </div>
 
-As we can observe, this is not the solution for a mass-spring system without damping. A dissipative error is evident, as the magnitude of the motion increases over time. The solution appears to "explode," causing both the velocity and position to tend toward infinity. In an undamped system, however, the magnitudes of velocity and position should remain constant over time. Position and velocity profiles should be in the form similar to harmonic oscilator i.e:
+As we can observe, this is not the solution for a mass-spring system without damping. A dissipative error is evident, as the amplitude of the motion increases over time. The solution appears to "explode," causing both the velocity and position to tend toward infinity. In an undamped system, however, the magnitudes of velocity and position should remain constant over time. Position and velocity profiles should be in the form similar to harmonic oscilator i.e:
 
 $$x(t) = Acos(\omega_0 t + \phi)$$
 $$v(t) = -A\omega_0 sin(\omega_0 t + \phi)$$
