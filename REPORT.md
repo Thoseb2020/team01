@@ -61,7 +61,7 @@ By increasing number of steps, we can fix this for short intervals:
   <img src="demos/plots/explicit/explicit Phase_plot_4 pi_10000 steps_.png" alt="Phase_plot" width="300">
 </div>
 
-The results of the simulation align with expectations, i.e., the relationship between velocity and position is conserved over time. However, it only seems to work properly for a limited interval durations. As the simulation interval increases, instability in the system becomes apparent, triggering dissipative errors and results of the algorithm unreliable.
+The results of the simulation align with expectations, i.e., the relationship between velocity and position is conserved over time. However, it only seems to work properly for a fixed interval. As the simulation interval increases, instability in the system becomes apparent, triggering dissipative errors and results of the algorithm unreliable.
 
 <div style="display: inline-block; text-align: center; margin-right: 10px;">
   <img src="demos/plots/explicit/explicit Time_evolution_60 pi_10000 steps_.png" alt="Time_evolution" width="300">
@@ -70,7 +70,17 @@ The results of the simulation align with expectations, i.e., the relationship be
   <img src="demos/plots/explicit/explicit Phase_plot_60 pi_10000 steps_.png" alt="Phase_plot" width="300">
 </div>
 
-Using this approach for shorter simulation intervals with increase of timestep improves the solution up to a certain point. One could suspect a hidden relationship between the timestep and the simulation interval that must be maintained to ensure a stable solution within the given time frame.
+Using this approach for shorter simulation intervals with increase of timestep improves the solution up to a certain point. One could suspect a hidden relationship between the timestep and the simulation interval that must be maintained to ensure a stable solution within the given time frame. Such bevaviour demonstrates convergence of the solution - but not stability. Convergence can be expressed in form of:
+
+
+$$
+\lim_{\tau \to 0} |y_n - y(t_n)| = 0
+$$
+
+where:
+$$
+\tau = \frac{t_{final} - t_{initial}}{N_{steps}}
+$$
 
 <div style="display: inline-block; text-align: center; margin-right: 10px;">
   <img src="demos/plots/explicit/explicit Time_evolution_60 pi_1000000 steps_.png" alt="Time_evolution" width="300">
@@ -112,7 +122,8 @@ That change has introduced a major improvement; however, over time we still cann
   <img src="demos/plots/improved/improved Time_evolution_60 pi_5000 steps_.png" alt="Phase_plot" width="300">
 </div>
 
-Introducing a significant increase in the number of timesteps—something that would completely destabilize the classical explicit Euler method—has remarkably stabilized the behavior of the Improved Euler method, both in terms of velocity and position over time. There is no noticeable dissipative or dispersive error, and the phase plot shows that the position-velocity relationship is ideally conserved as an elliptical trajectory. We can be sure that some very small diffusive error still exists, which could grow if the simulation were extended further; however, the simulation was concluded at this step. Nevertheless, this behavior demonstrates that the system is stable. In other words, according to the rules of the stability definition, we can find a significantly small timestep that will make the solution stable while times go to infinity.
+Introducing a significant increase in the number of timesteps—something that would completely destabilize the classical explicit Euler method—has remarkably stabilized the behavior of the Improved Euler method, both in terms of velocity and position over time. There is no noticeable dissipative or dispersive error, and the phase plot shows that the position-velocity relationship is ideally conserved as an elliptical trajectory. We cannot be sure that any diffusive of dispersive error still not exists, which could grow if the simulation were extended further; however, the simulation was concluded at this step. Nevertheless, this behavior demonstrates that the system is stable. In other words, according to the rules of the stability definition, we can find a significantly small timestep that will make the solution stable while times go to infinity.
+
 
 $$
 \lim_{n_{steps} \to ∞} |y_n - y(t_n)| = 0
