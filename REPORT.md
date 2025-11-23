@@ -18,11 +18,11 @@ Where:
 
 Our system of mass-sprint is described by the following relation:
 $$
-y_0' = y_1
+y_{0}' = y_1
 $$
 
 $$
-y_1' = -\frac{k}{m} y_0
+y_{1}' = -\frac{k}{m} y_0
 $$
 
 
