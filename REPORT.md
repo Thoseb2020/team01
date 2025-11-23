@@ -37,7 +37,7 @@ With the original settings, we obtain the following results:
   <img src="demos/plots/explicit/explicit Phase_plot_4 pi_100 steps_.png" alt="Phase_plot" width="300">
 </div>
 
-As we can observe, this is not the solution for a mass-spring system without damping. A dissipative error is evident, as the amplitude of the motion increases over time. The solution appears to "explode," causing both the velocity and position to tend toward infinity. In an undamped system, however, the magnitudes of velocity and position should remain constant over time. Position and velocity profiles should be in the form similar to harmonic oscilator i.e:
+As we can observe, this is not the solution for a mass-spring system without damping. A dissipative error is evident, as the amplitude of the motion increases over time. The solution appears to "explode", causing both the velocity and position to tend toward infinity. Such behaviour seems to increases the energy of a system - which is physically impossible due to Energy Conservation Law. In an undamped system, the amplitudes of velocity and position should remain constant over time. Position and velocity profiles should be in the form similar to harmonic oscilator i.e:
 
 $$x(t) = Acos(\omega_0 t + \phi)$$
 $$v(t) = -A\omega_0 sin(\omega_0 t + \phi)$$
@@ -52,7 +52,7 @@ Additionally, we would expect the position-velocity chart to take an elliptical 
 We can assume that the phase relationship between displacement and velocity is correct and equal to 90 degrees, meaning no dispersive error is observed. 
 
 
-By increasing the step size, we can fix this for short intervals:
+By increasing number of steps, we can fix this for short intervals:
 
 <div style="display: inline-block; text-align: center; margin-right: 10px;">
   <img src="demos/plots/explicit/explicit Time_evolution_4 pi_10000 steps_.png" alt="Time_evolution" width="300">
@@ -112,16 +112,12 @@ That change has introduced a major improvement; however, over time we still cann
   <img src="demos/plots/improved/improved Time_evolution_60 pi_5000 steps_.png" alt="Phase_plot" width="300">
 </div>
 
-Introducing a significant increase in the number of timesteps—something that would completely destabilize the classical explicit Euler method—has remarkably stabilized the behavior of the Improved Euler method, both in terms of velocity and position over time. There is no noticeable dissipative or dispersive error, and the phase plot shows that the position-velocity relationship is ideally conserved as an elliptical trajectory. We can be sure that some very small diffusive error still exists, which could grow if the simulation were extended further; however, the simulation was concluded at this step. Nevertheless, this behavior demonstrates that the system is stable. In other words, according to the rules of the stability definition, increasing the "cost" in terms of timesteps improves the accuracy of the solution
+Introducing a significant increase in the number of timesteps—something that would completely destabilize the classical explicit Euler method—has remarkably stabilized the behavior of the Improved Euler method, both in terms of velocity and position over time. There is no noticeable dissipative or dispersive error, and the phase plot shows that the position-velocity relationship is ideally conserved as an elliptical trajectory. We can be sure that some very small diffusive error still exists, which could grow if the simulation were extended further; however, the simulation was concluded at this step. Nevertheless, this behavior demonstrates that the system is stable. In other words, according to the rules of the stability definition, we can find a significantly small timestep that will make the solution stable while times go to infinity.
 
 $$
-\lim_{\tau \to 0} |y_n - y(t_n)| = 0
+\lim_{n_{steps} \to ∞} |y_n - y(t_n)| = 0
 $$
 
-where 
-$$
-\tau = \frac{t_{final}-t_{initial}}{N_{steps}}
-$$
 
 <div style="display: inline-block; text-align: center; margin-right: 10px;">
   <img src="demos/plots/explicit/explicit Phase_plot_60 pi_5000 steps_.png" alt="Time_evolution" width="300">
