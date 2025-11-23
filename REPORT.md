@@ -70,7 +70,7 @@ The results of the simulation align with expectations, i.e., the relationship be
   <img src="demos/plots/explicit/explicit Phase_plot_60 pi_10000 steps_.png" alt="Phase_plot" width="300">
 </div>
 
-Using this approach for shorter simulation times, increasing the timestep improves the solution up to a certain point. One could suspect a hidden relationship between the timestep and the simulation interval that must be maintained to ensure a stable solution within the given time frame.
+Using this approach for shorter simulation intervals with increase of timestep improves the solution up to a certain point. One could suspect a hidden relationship between the timestep and the simulation interval that must be maintained to ensure a stable solution within the given time frame.
 
 <div style="display: inline-block; text-align: center; margin-right: 10px;">
   <img src="demos/plots/explicit/explicit Time_evolution_60 pi_1000000 steps_.png" alt="Time_evolution" width="300">
