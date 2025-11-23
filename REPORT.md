@@ -61,7 +61,7 @@ By increasing the step size, we can fix this for short intervals:
   <img src="demos/plots/explicit/explicit Phase_plot_4 pi_10000 steps_.png" alt="Phase_plot" width="300">
 </div>
 
-The results of the simulation align with expectations, i.e., the relationship between velocity and position is conserved over time. However, it only seems to work properly for a limited duration. As the simulation time increases, instability in the system becomes apparent, triggering dissipative errors and rendering the algorithm unreliable.
+The results of the simulation align with expectations, i.e., the relationship between velocity and position is conserved over time. However, it only seems to work properly for a limited interval durations. As the simulation interval increases, instability in the system becomes apparent, triggering dissipative errors and results of the algorithm unreliable.
 
 <div style="display: inline-block; text-align: center; margin-right: 10px;">
   <img src="demos/plots/explicit/explicit Time_evolution_60 pi_10000 steps_.png" alt="Time_evolution" width="300">
