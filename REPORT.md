@@ -52,7 +52,7 @@ Additionally, we would expect the position-velocity chart to take an elliptical 
 We can assume that the phase relationship between displacement and velocity is correct and equal to 90 degrees, meaning no dispersive error is observed. 
 
 
-By increasing the step size, we can fix this for short times:
+By increasing the step size, we can fix this for short intervals:
 
 <div style="display: inline-block; text-align: center; margin-right: 10px;">
   <img src="demos/plots/explicit/explicit Time_evolution_4 pi_10000 steps_.png" alt="Time_evolution" width="300">
