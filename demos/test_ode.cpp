@@ -54,7 +54,14 @@ int main(int argc, char* argv[])
   }else if(algorithm=="improved")
   {
     stepper = std::make_unique<ImprovedEuler>(rhs);
-  }else{
+  }else if(algorithm=="implicit")
+  {
+    stepper = std::make_unique<ImplicitEuler>(rhs);
+  }else if(algorithm=="CN")
+  {
+    stepper = std::make_unique<CrankNicolson>(rhs);
+  }else
+  {
     std::cout << "Use explicit or improved method, for example: ./runmassspring.sh 4 100 explicit";
   }
   
