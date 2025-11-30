@@ -8,9 +8,9 @@
 namespace ASC_ode
 {
 
-// =========================
-// Variable class
-// =========================
+// =====================================================
+// Variable class (template for independent variable xi)
+// =====================================================
 template <size_t I, typename T = double>
 class Variable
 {
@@ -27,9 +27,9 @@ template <typename T = double>
 T derivative(T, size_t) { return T(0); }
 
 
-// =========================
-// AutoDiff class
-// =========================
+// =====================================================
+// AutoDiff<N,T> class
+// =====================================================
 template <size_t N, typename T = double>
 class AutoDiff
 {
@@ -57,7 +57,10 @@ public:
     const std::array<T, N> &deriv() const { return m_deriv; }
 };
 
-// derivative() for AutoDiff
+
+// =====================================================
+// derivative() for AutoDiff type
+// =====================================================
 template <size_t N, typename T = double>
 auto derivative(const AutoDiff<N, T> &v, size_t index)
 {
@@ -65,9 +68,9 @@ auto derivative(const AutoDiff<N, T> &v, size_t index)
 }
 
 
-// =========================
-// Printing
-// =========================
+// =====================================================
+// Printing operator
+// =====================================================
 template <size_t N, typename T>
 std::ostream &operator<<(std::ostream &os, const AutoDiff<N, T> &ad)
 {
@@ -82,11 +85,9 @@ std::ostream &operator<<(std::ostream &os, const AutoDiff<N, T> &ad)
 }
 
 
-// =========================
-// Operators
-// =========================
-
-// ---- addition ----
+// =====================================================
+// Addition
+// =====================================================
 template <size_t N, typename T = double>
 AutoDiff<N, T> operator+(const AutoDiff<N, T> &a, const AutoDiff<N, T> &b)
 {
@@ -108,7 +109,10 @@ AutoDiff<N, T> operator+(const AutoDiff<N, T> &a, T b)
     return a + AutoDiff<N, T>(b);
 }
 
-// ---- subtraction ----
+
+// =====================================================
+// Subtraction
+// =====================================================
 template <size_t N, typename T = double>
 AutoDiff<N, T> operator-(const AutoDiff<N, T> &a)
 {
@@ -127,7 +131,10 @@ AutoDiff<N, T> operator-(const AutoDiff<N, T> &a, const AutoDiff<N, T> &b)
     return r;
 }
 
-// ---- multiplication ----
+
+// =====================================================
+// Multiplication (3 overloads)
+// =====================================================
 template <size_t N, typename T = double>
 AutoDiff<N, T> operator*(const AutoDiff<N, T> &a, const AutoDiff<N, T> &b)
 {
@@ -149,29 +156,57 @@ AutoDiff<N, T> operator*(const AutoDiff<N, T> &a, T b)
     return a * AutoDiff<N, T>(b);
 }
 
-// ---- division ----
+
+// =====================================================
+// Division (FULL SET: 3 overloads)
+// =====================================================
+
+// AutoDiff / AutoDiff (quotient rule)
 template <size_t N, typename T = double>
 AutoDiff<N, T> operator/(const AutoDiff<N, T> &a, const AutoDiff<N, T> &b)
 {
     AutoDiff<N, T> r(a.value() / b.value());
+    T b2 = b.value() * b.value();
+
     for (size_t i = 0; i < N; i++)
     {
         r.deriv()[i] =
-            (a.deriv()[i] * b.value() - a.value() * b.deriv()[i]) /
-            (b.value() * b.value());
+            (a.deriv()[i] * b.value() - a.value() * b.deriv()[i]) / b2;
     }
     return r;
 }
 
+// AutoDiff / constant
+template <size_t N, typename T = double>
+AutoDiff<N, T> operator/(const AutoDiff<N, T> &a, T c)
+{
+    AutoDiff<N, T> r(a.value() / c);
+    for (size_t i = 0; i < N; i++)
+        r.deriv()[i] = a.deriv()[i] / c;
+    return r;
+}
 
-// =========================
+// constant / AutoDiff  (special quotient rule)
+template <size_t N, typename T = double>
+AutoDiff<N, T> operator/(T c, const AutoDiff<N, T> &a)
+{
+    AutoDiff<N, T> r(c / a.value());
+    T a2 = a.value() * a.value();
+
+    for (size_t i = 0; i < N; i++)
+        r.deriv()[i] = -c * a.deriv()[i] / a2;
+
+    return r;
+}
+
+
+// =====================================================
 // Elementary functions
-// =========================
-
-using std::sin;
+// =====================================================
 using std::cos;
 using std::exp;
 using std::log;
+using std::sin;
 
 template <size_t N, typename T = double>
 AutoDiff<N, T> sin(const AutoDiff<N, T> &a)
