@@ -75,11 +75,10 @@ int main(int argc, char* argv[])
         stepper = std::make_unique<CrankNicolson>(rhs);
     else if (algorithm == "RK2")
         stepper = std::make_unique<RungeKutta2>(rhs);
-    else if (algorithm == "RK4")
-        stepper = std::make_unique<RungeKutta4>(rhs);
+    
     else
     {
-        std::cout << "Choose method: explicit / improved / implicit / CN / RK2 / RK4\n";
+        std::cout << "Choose method: explicit / improved / implicit / CN / RK2 \n";
         return 1;
     }
 
