@@ -158,10 +158,8 @@ AutoDiff<N, T> operator*(const AutoDiff<N, T> &a, T b)
 
 
 // =====================================================
-// Division (FULL SET: 3 overloads)
+// Division (3 full overloads)
 // =====================================================
-
-// AutoDiff / AutoDiff (quotient rule)
 template <size_t N, typename T = double>
 AutoDiff<N, T> operator/(const AutoDiff<N, T> &a, const AutoDiff<N, T> &b)
 {
@@ -169,14 +167,11 @@ AutoDiff<N, T> operator/(const AutoDiff<N, T> &a, const AutoDiff<N, T> &b)
     T b2 = b.value() * b.value();
 
     for (size_t i = 0; i < N; i++)
-    {
-        r.deriv()[i] =
-            (a.deriv()[i] * b.value() - a.value() * b.deriv()[i]) / b2;
-    }
+        r.deriv()[i] = (a.deriv()[i] * b.value() - a.value() * b.deriv()[i]) / b2;
+
     return r;
 }
 
-// AutoDiff / constant
 template <size_t N, typename T = double>
 AutoDiff<N, T> operator/(const AutoDiff<N, T> &a, T c)
 {
@@ -186,7 +181,6 @@ AutoDiff<N, T> operator/(const AutoDiff<N, T> &a, T c)
     return r;
 }
 
-// constant / AutoDiff  (special quotient rule)
 template <size_t N, typename T = double>
 AutoDiff<N, T> operator/(T c, const AutoDiff<N, T> &a)
 {

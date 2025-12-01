@@ -44,20 +44,18 @@ int main(int argc, char* argv[])
     if (argc < 4)
     {
         std::cout << "Usage: ./test_ode T_relative steps method\n";
-        std::cout << "Example: ./test_ode 4 100 RK4\n";
+        std::cout << "Example: ./test_ode 4 100 RK2\n";
         return 1;
     }
 
-    double tend_relative = atof(argv[1]);   // example: 4
-    int steps = atoi(argv[2]);              // example: 100
-    std::string algorithm = argv[3];        // explicit / improved / implicit / CN / RK2 / RK4
+    double tend_relative = atof(argv[1]);
+    int steps = atoi(argv[2]);
+    std::string algorithm = argv[3];
 
     double tend = tend_relative * M_PI;
     double tau = tend / steps;
 
-    // Initial conditions: x(0)=1, v(0)=0
     Vector<> y = {1.0, 0.0};
-
     auto rhs = std::make_shared<MassSpring>(1.0, 1.0);
 
     // ========================================================
@@ -75,10 +73,9 @@ int main(int argc, char* argv[])
         stepper = std::make_unique<CrankNicolson>(rhs);
     else if (algorithm == "RK2")
         stepper = std::make_unique<RungeKutta2>(rhs);
-    
     else
     {
-        std::cout << "Choose method: explicit / improved / implicit / CN / RK2 \n";
+        std::cout << "Choose method: explicit / improved / implicit / CN / RK2\n";
         return 1;
     }
 
