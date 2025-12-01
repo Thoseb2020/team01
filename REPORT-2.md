@@ -34,7 +34,7 @@ The following methods were implemented and tested:
 #### **Plots**
 Plots for the solution trajectories and phase-space behavior were generated.
 
-Firstly we can take a look at Explicit Euler result of our mass-spring system.
+Firstly we can take a look at Explicit Euler result of our mass-spring system, which we can already assume not to be a stable solution.
 <h4 style="text-align:center;">Time Evolution (Mass–Spring)</h4>
 <p align="center">
   <img src="report_images/Time_evolution_standard.png" width="450">
@@ -63,7 +63,7 @@ $$
   <img src="demos/plots/implicit/implicit Phase_plot_4 pi_100 steps_.png" width="450">
 </p>
 
-For the implicit Euler method, despite our earlier intention to stabilize the solution, we did not observe such high dispersion. However, the amplitude of the solution decreases, indicating that an error is still present—this can also be seen in the phase plot. Such errors cause the solution to vanish at infinity.
+For the implicit Euler method, despite our earlier intention to stabilize the solution, we did not observe significant dispersion. However, the amplitude of the solution decreases, indicating the presence of another type of error, which is also evident in the phase plot. These errors cause the solution to decay toward zero as time progresses. This vanishing behavior can be associated with a loss of energy in the system, often accompanied by numerical dissipation. Such dissipation arises from the way the derivative is approximated, which reduces its magnitude and leads to a gradual decrease in the solution’s amplitude.
 
 Next approach to obtain a stable solution was to use the Crank-Nicolson method, which uses 3 points stencil
 
