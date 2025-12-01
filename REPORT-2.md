@@ -33,6 +33,8 @@ The following methods were implemented and tested:
 
 #### **Plots**
 Plots for the solution trajectories and phase-space behavior were generated.
+
+Firstly we can take a look at Explicit Euler result of our mass-spring system.
 <h4 style="text-align:center;">Time Evolution (Mass–Spring)</h4>
 <p align="center">
   <img src="report_images/Time_evolution_standard.png" width="450">
@@ -43,7 +45,47 @@ Plots for the solution trajectories and phase-space behavior were generated.
   <img src="report_images/Phase_plot_standard.png" width="450">
 </p>
 
-#### **Observations**
+As we can observe - like it was in previous exercise, Explciit Euler method can be characterized by huge dispersive error which can be seen by solution that tries to ,,explode'' while times go to infinity.
+
+Next step to obtain a better solution was to utilize implicit Euler method which was defined by the following schema:
+
+$$
+y_{n+1} = y_n + h * f(t_{n+1}, y_{n+1})
+$$
+
+<h4 style="text-align:center;">Time Evolution (Mass–Spring)</h4>
+<p align="center">
+  <img src="demos/plots/implicit/implicit Time_evolution_4 pi_100 steps_.png" width="450">
+</p>
+
+<h4 style="text-align:center;">Phase Plot (Mass–Spring)</h4>
+<p align="center">
+  <img src="demos/plots/implicit/implicit Phase_plot_4 pi_100 steps_.png" width="450">
+</p>
+
+For the implicit Euler method, despite our earlier intention to stabilize the solution, we did not observe such high dispersion. However, the amplitude of the solution decreases, indicating that an error is still present—this can also be seen in the phase plot. Such errors cause the solution to vanish at infinity.
+
+Next approach to obtain a stable solution was to use the Crank-Nicolson method, which uses 3 points stencil
+
+$$
+u^{n+1} = u^{n} + \frac{\Delta t}{2} \left( f(u^{n}) + f(u^{n+1}) \right)
+$$
+
+
+<h4 style="text-align:center;">Time Evolution (Mass–Spring)</h4>
+<p align="center">
+  <img src="demos/plots/CN/CN Time_evolution_4 pi_100 steps_.png" width="450">
+</p>
+
+<h4 style="text-align:center;">Phase Plot (Mass–Spring)</h4>
+<p align="center">
+  <img src="demos/plots/CN/CN Phase_plot_4 pi_100 steps_.png" width="450">
+</p>
+
+As we can see from the time-evolution plot, we have finally obtained a stable solution for our mass–spring system that meets the definition of stability; that is, we were able to find a sufficiently small time step that makes the error vanish at infinity. The amplitude remains constant, as expected for an undamped oscillator. Moreover, the phase plot forms an ideal ellipse, which is also characteristic of such a mathematical system.
+
+
+#### **Summary**
 - **Explicit Euler**: noticeable phase error and amplitude drift.  
 - **Improved Euler**: better accuracy but still accumulates drift.  
 - **Implicit Euler**: unconditionally stable, slightly overdamped.  
