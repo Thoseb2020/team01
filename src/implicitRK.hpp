@@ -5,9 +5,11 @@
 #include <matrix.hpp>
 #include <inverse.hpp>
 
+#include "timestepper.hpp"
+#include "Newton.hpp" 
+
 namespace ASC_ode {
   using namespace nanoblas;
-
 
 
   class ImplicitRungeKutta : public TimeStepper
