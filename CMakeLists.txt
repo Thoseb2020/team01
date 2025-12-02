@@ -24,3 +24,7 @@ target_link_libraries(test_autodiff PUBLIC nanoblas)
 
 add_executable(test_pendulum_autodiff demos/test_pendulum_autodiff.cpp)
 target_link_libraries(test_pendulum_autodiff PUBLIC nanoblas)
+
+add_executable(test_IRK demos/test_IRK.cpp)
+target_link_libraries(test_IRK PUBLIC nanoblas)
+
