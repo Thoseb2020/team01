@@ -1,9 +1,10 @@
-
 #include <iostream>
 #include <fstream>
 #include <memory>
+
 #include "nonlinfunc.hpp"
 #include "timestepper.hpp"
+#include "implicitRK.hpp"
 
 using namespace ASC_ode;
 
@@ -45,7 +46,7 @@ int main(int argc, char* argv[])
     if (argc < 4)
     {
         std::cout << "Usage: ./test_ode T_relative steps method\n";
-        std::cout << "Example: ./test_ode 4 100 RK2\n";
+        std::cout << "Example: ./test_ode 4 100 implicit\n";
         return 1;
     }
 
@@ -76,12 +77,12 @@ int main(int argc, char* argv[])
         stepper = std::make_unique<RungeKutta2>(rhs);
     else
     {
-        std::cout << "Choose method: explicit / improved / implicit / CN / RK2\n";
+        std::cout << "Choose: explicit / improved / implicit / CN / RK2\n";
         return 1;
     }
 
     // ========================================================
-    // Write output file
+    // Output
     // ========================================================
     std::ofstream outfile("output_test_ode.txt");
 
@@ -91,8 +92,8 @@ int main(int argc, char* argv[])
     for (int i = 0; i < steps; i++)
     {
         stepper->DoStep(tau, y);
-
         double t = (i + 1) * tau;
+
         std::cout << t << "  " << y(0) << " " << y(1) << "\n";
         outfile << t << "  " << y(0) << " " << y(1) << "\n";
     }
