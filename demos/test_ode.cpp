@@ -1,102 +1,100 @@
 #include <iostream>
-#include <fstream>
-#include <memory>
+#include <fstream> 
 
-#include "nonlinfunc.hpp"
-#include "timestepper.hpp"
-#include "implicitRK.hpp"
+#include <nonlinfunc.hpp>
+#include <timestepper.hpp>
+#include <implicitRK.hpp>
 
 using namespace ASC_ode;
 
-// ========================================================
-// Mass–Spring System:  y' = f(y)
-// y = [x, v]
-// x' = v
-// v' = -(k/m) * x
-// ========================================================
+
 class MassSpring : public NonlinearFunction
 {
 private:
-    double mass;
-    double stiffness;
+  double mass;
+  double stiffness;
 
 public:
-    MassSpring(double m, double k) : mass(m), stiffness(k) {}
+  MassSpring(double m, double k) : mass(m), stiffness(k) {}
 
-    size_t dimX() const override { return 2; }
-    size_t dimF() const override { return 2; }
-
-    void evaluate(VectorView<double> x, VectorView<double> f) const override
-    {
-        f(0) = x(1);
-        f(1) = -stiffness / mass * x(0);
-    }
-
-    void evaluateDeriv(VectorView<double> x, MatrixView<double> df) const override
-    {
-        df = 0.0;
-        df(0, 1) = 1.0;
-        df(1, 0) = -stiffness / mass;
-    }
+  size_t dimX() const override { return 2; }
+  size_t dimF() const override { return 2; }
+  
+  void evaluate (VectorView<double> x, VectorView<double> f) const override
+  {
+    f(0) = x(1);
+    f(1) = -stiffness/mass*x(0);
+  }
+  
+  void evaluateDeriv (VectorView<double> x, MatrixView<double> df) const override
+  {
+    df = 0.0;
+    df(0,1) = 1;
+    df(1,0) = -stiffness/mass;
+  }
 };
 
 
-int main(int argc, char* argv[])
+int main()
 {
-    if (argc < 4)
-    {
-        std::cout << "Usage: ./test_ode T_relative steps method\n";
-        std::cout << "Example: ./test_ode 4 100 implicit\n";
-        return 1;
-    }
+  double tend = 4*M_PI;
+  int steps = 100;
+  double tau = tend/steps;
 
-    double tend_relative = atof(argv[1]);
-    int steps = atoi(argv[2]);
-    std::string algorithm = argv[3];
+  Vector<> y = { 1, 0 };  // initializer list
+  auto rhs = std::make_shared<MassSpring>(1.0, 1.0);
 
-    double tend = tend_relative * M_PI;
-    double tau = tend / steps;
 
-    Vector<> y = {1.0, 0.0};
-    auto rhs = std::make_shared<MassSpring>(1.0, 1.0);
 
-    // ========================================================
-    // Choose timestepper
-    // ========================================================
-    std::unique_ptr<TimeStepper> stepper;
+/*
+  Vector<> Radau(3), RadauWeight(3);
+  GaussRadau (Radau, RadauWeight);
+  // not sure about weights, comput them via ComputeABfromC
+  cout << "Radau = " << Radau << ", weight = " << RadauWeight <<  endl;
+        Vector<> Gauss2c(2), Gauss3c(3);
+*/
+ 
 
-    if (algorithm == "explicit")
-        stepper = std::make_unique<ExplicitEuler>(rhs);
-    else if (algorithm == "improved")
-        stepper = std::make_unique<ImprovedEuler>(rhs);
-    else if (algorithm == "implicit")
-        stepper = std::make_unique<ImplicitEuler>(rhs);
-    else if (algorithm == "CN")
-        stepper = std::make_unique<CrankNicolson>(rhs);
-    else if (algorithm == "RK2")
-        stepper = std::make_unique<RungeKutta2>(rhs);
-    else
-    {
-        std::cout << "Choose: explicit / improved / implicit / CN / RK2\n";
-        return 1;
-    }
+  // ExplicitEuler stepper(rhs);
+  // ImplicitEuler stepper(rhs);
 
-    // ========================================================
-    // Output
-    // ========================================================
-    std::ofstream outfile("output_test_ode.txt");
+  // RungeKutta stepper(rhs, Gauss2a, Gauss2b, Gauss2c);
 
-    std::cout << 0.0 << "  " << y(0) << " " << y(1) << "\n";
-    outfile << 0.0 << "  " << y(0) << " " << y(1) << "\n";
+  // Gauss3c .. points tabulated, compute a,b:
+  auto [Gauss3a,Gauss3b] = computeABfromC (Gauss3c);
+  ImplicitRungeKutta stepper(rhs, Gauss3a, Gauss3b, Gauss3c);
 
-    for (int i = 0; i < steps; i++)
-    {
-        stepper->DoStep(tau, y);
-        double t = (i + 1) * tau;
 
-        std::cout << t << "  " << y(0) << " " << y(1) << "\n";
-        outfile << t << "  " << y(0) << " " << y(1) << "\n";
-    }
+  /*
+  // arbitrary order Gauss-Legendre
+  int stages = 5;
+  Vector<> c(stages), b1(stages);
+  GaussLegendre(c, b1);
 
-    return 0;
+  auto [a, b] = computeABfromC(c);
+  ImplicitRungeKutta stepper(rhs, a, b, c);
+  */
+
+  /* 
+  // arbitrary order Radau
+  int stages = 5;
+  Vector<> c(stages), b1(stages);
+  GaussRadau(c, b1);
+
+  auto [a, b] = computeABfromC(c);
+  ImplicitRungeKutta stepper(rhs, a, b, c);
+  */
+
+
+  std::ofstream outfile ("output_test_ode.txt");
+  std::cout << 0.0 << "  " << y(0) << " " << y(1) << std::endl;
+  outfile << 0.0 << "  " << y(0) << " " << y(1) << std::endl;
+
+  for (int i = 0; i < steps; i++)
+  {
+     stepper.doStep(tau, y);
+
+     std::cout << (i+1) * tau << "  " << y(0) << " " << y(1) << std::endl;
+     outfile << (i+1) * tau << "  " << y(0) << " " << y(1) << std::endl;
+  }
 }

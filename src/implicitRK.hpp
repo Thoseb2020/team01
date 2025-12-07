@@ -5,11 +5,9 @@
 #include <matrix.hpp>
 #include <inverse.hpp>
 
-#include "timestepper.hpp"
-#include "Newton.hpp" 
-
 namespace ASC_ode {
   using namespace nanoblas;
+
 
 
   class ImplicitRungeKutta : public TimeStepper
@@ -205,9 +203,10 @@ auto computeABfromC (const Vector<> & c)
         tmp(i) = std::pow(c(j),i+1) / (i+1);
       a.row(j) = M * tmp;
     }
-  /*std::cout << "b = " << b << std::endl;
-  std::cout << "a = " << a << std::endl;*/
-
+  /*
+  std::cout << "b = " << b << std::endl;
+  std::cout << "a = " << a << std::endl;
+  */
   return std::tuple { a, b };
 }
   
