@@ -28,7 +28,7 @@ plt.ylabel("value")
 plt.title(f"Mass-Spring System Time Evolution {algorithm}")
 plt.legend()
 plt.grid()
-plt.savefig(f"Time evolution ${algorithm}.png", dpi=300)
+plt.savefig(f"Time evolution {algorithm}.png", dpi=300)
 plt.show()
 plt.close()
 
