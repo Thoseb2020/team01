@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 data = np.loadtxt("data.txt", usecols=range(0, 9),   delimiter=",", skiprows=1)
 
-algorithm = "Gauss3"
+algorithm = "Radau3"
 def resolve_algorithm (name: str):
     if name == "Gauss2":
         return (1,2)
@@ -25,19 +25,19 @@ plt.plot(data[:, time_col], data[:, x_col], label="position")
 plt.plot(data[:, time_col], data[:, y_col], label="velocity")
 plt.xlabel("time")
 plt.ylabel("value")
-plt.title("Mass-Spring System Time Evolution")
+plt.title(f"Mass-Spring System Time Evolution {algorithm}")
 plt.legend()
 plt.grid()
-plt.savefig("Time_evolution_Gauss2.png", dpi=300)
+plt.savefig(f"Time evolution ${algorithm}.png", dpi=300)
 plt.show()
 plt.close()
 
 plt.plot(data[:, 1], data[:, 2], label="phase plot")
 plt.xlabel("position")
 plt.ylabel("velocity")
-plt.title("Mass-Spring System Phase Plot")
+plt.title(f"Mass-Spring System Phase Plot {algorithm}")
 plt.legend()
 plt.grid()
-plt.savefig("ResultPlot.png", dpi=300)
+plt.savefig(f"Result {algorithm}.png", dpi=300)
 plt.show()
 plt.close()
