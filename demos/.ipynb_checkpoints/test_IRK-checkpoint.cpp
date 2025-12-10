@@ -46,19 +46,19 @@ int main(int argc, char* argv[]){
     
     Vector<> c_gl2 {0,0};
     GaussLegendre(c_gl2, w2);
-    auto [a_gl2, b_gl2] = ComputeABfromC(c_gl2);
+    auto [a_gl2, b_gl2] = computeABfromC(c_gl2);
     
     Vector<> c_gl3 {0,0,0};
     GaussLegendre(c_gl3, w3);
-    auto [a_gl3, b_gl3] = ComputeABfromC(c_gl3);
+    auto [a_gl3, b_gl3] = computeABfromC(c_gl3);
     
     Vector<> c_rad2 {0,0};
     GaussLegendre(c_rad2, w2);
-    auto [a_rad2, b_rad2] = ComputeABfromC(c_rad2);
+    auto [a_rad2, b_rad2] = computeABfromC(c_rad2);
     
     Vector<> c_rad3 {0,0,0};
     GaussLegendre(c_rad3, w3);
-    auto [a_rad3, b_rad3] = ComputeABfromC(c_rad3);
+    auto [a_rad3, b_rad3] = computeABfromC(c_rad3);
 
     //___Solving-ODE___
 
@@ -96,10 +96,10 @@ int main(int argc, char* argv[]){
     for(int i; i <= steps; i++){
         std::cout << t << ", " << yg2(0) << ", " << yg2(1) << ", " << yg3(0) << ", " << yg3(1) << ", " << yr2(0) << ", " << yr2(1) << ", " << yr3(0) << ", " << yr3(1) << "\n" ; 
         
-        G2 -> DoStep(tau,yg2);
-        G3 -> DoStep(tau,yg3);
-        rad2 -> DoStep(tau,yr2);
-        rad3 -> DoStep(tau,yr3); 
+        G2 -> doStep(tau,yg2);
+        G3 -> doStep(tau,yg3);
+        rad2 -> doStep(tau,yr2);
+        rad3 -> doStep(tau,yr3); 
         t = t + tau;
         
     }
