@@ -5,42 +5,10 @@
 #include "nonlinfunc.hpp"
 #include "timestepper.hpp"
 #include "implicitRK.hpp"
+#include "massspring.cpp"
 
 using namespace ASC_ode;
 using namespace nanoblas;
-
-// ========================================================
-// Mass–Spring System:  y' = f(y)
-// y = [x, v]
-// x' = v
-// v' = -(k/m) * x
-// ========================================================
-class MassSpring : public NonlinearFunction
-{
-private:
-    double mass;
-    double stiffness;
-
-public:
-    MassSpring(double m, double k) : mass(m), stiffness(k) {}
-
-    size_t dimX() const override { return 2; }
-    size_t dimF() const override { return 2; }
-
-    void evaluate(VectorView<double> x, VectorView<double> f) const override
-    {
-        f(0) = x(1);
-        f(1) = -stiffness / mass * x(0);
-    }
-
-    void evaluateDeriv(VectorView<double> x, MatrixView<double> df) const override
-    {
-        df = 0.0;
-        df(0, 1) = 1.0;
-        df(1, 0) = -stiffness / mass;
-    }
-};
-
 
 int main(int argc, char* argv[])
 {
@@ -85,11 +53,17 @@ int main(int argc, char* argv[])
     // ========================================================
     // Write output file
     // ========================================================
-    std::ofstream outfile("output_test_ode.txt");
+    //std::ofstream outfile ("output_test_ode.txt");
+    std::cout << 0.0 << "  " << y(0) << " " << y(1) << std::endl;
+    //outfile << 0.0 << "  " << y(0) << " " << y(1) << std::endl;
 
-    std::cout << 0.0 << "  " << y(0) << " " << y(1) << "\n";
-    outfile << 0.0 << "  " << y(0) << " " << y(1) << "\n";
-    
+  for (int i = 0; i < steps; i++)
+  {
+     stepper->doStep(tau, y);
+
+     std::cout << (i+1) * tau << "  " << y(0) << " " << y(1) << std::endl;
+     //outfile << (i+1) * tau << "  " << y(0) << " " << y(1) << std::endl;
+  }
    /* 
   // Gauss3c .. points tabulated, compute a,b:
   auto [Gauss3a,Gauss3b] = computeABfromC (Gauss3c);
@@ -115,20 +89,6 @@ int main(int argc, char* argv[])
   GaussRadau(c, b1);
 
   auto [a, b] = computeABfromC(c);
-  ImplicitRungeKutta stepper(rhs, a, b, c);
+  ImplicitRungeKutta stepper(rhs, a, b, c);*/
   
-
-
-  std::ofstream outfile ("output_test_ode.txt");
-  std::cout << 0.0 << "  " << y(0) << " " << y(1) << std::endl;
-  outfile << 0.0 << "  " << y(0) << " " << y(1) << std::endl;
-
-  for (int i = 0; i < steps; i++)
-  {
-     stepper.doStep(tau, y);
-
-     std::cout << (i+1) * tau << "  " << y(0) << " " << y(1) << std::endl;
-     outfile << (i+1) * tau << "  " << y(0) << " " << y(1) << std::endl;
-  }
-    */
 }
