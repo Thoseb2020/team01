@@ -5,13 +5,25 @@ int main()
 {
   MassSpringSystem<2> mss;
   mss.setGravity( {0,-9.81} );
-  auto fA = mss.addFix( { { 0.0, 0.0 } } );
-  auto mA = mss.addMass( { 1, { 1.0, 0.0 } } );
-  mss.addSpring ( { 1, 10, { fA, mA } }  );
 
-  auto mB = mss.addMass( { 1, { 2.0, 0.0 } } );
-  mss.addSpring ( { 1, 20, { mA, mB } } );
 
+  auto m1 = mss.addMass({1, {0,0}});
+  auto m2 = mss.addMass({1, {1,0}});
+  auto m3 = mss.addMass({1, {0.5,0.866}});  // equilateral triangle
+
+  double L = 1.0;
+  mss.addConstraint({L, {m1, m2}});
+  mss.addConstraint({L, {m2, m3}});
+  mss.addConstraint({L, {m3, m1}});
+
+  // give spinning initial velocity
+  mss.masses()[0].vel = {0, 1};
+  mss.masses()[1].vel = {-1, 0};
+  mss.masses()[2].vel = {1, -1};
+
+
+
+  
   std::cout << "mss: " << std::endl << mss << std::endl;
 
 
