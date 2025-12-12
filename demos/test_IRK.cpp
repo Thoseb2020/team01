@@ -91,7 +91,7 @@ int main(int argc, char* argv[]){
     rad2 = std::make_unique<ImplicitRungeKutta>(sys, a_rad2, b_rad2, c_rad2);
     rad3 = std::make_unique<ImplicitRungeKutta>(sys, a_rad3, b_rad3, c_rad3);
 
-    
+    printf("Total steps: %d\n", steps);
     std::cout << "time, " <<  "Gauss2x, " << "Gauss2y, " << "Gauss3x, " << "Gauss3y, " << "Rad2x, " << "Rad2y, " << "Rad3x, " << "Rad3y, " << "\n";
     for(int i; i <= steps; i++){
         std::cout << t << ", " << yg2(0) << ", " << yg2(1) << ", " << yg3(0) << ", " << yg3(1) << ", " << yr2(0) << ", " << yr2(1) << ", " << yr3(0) << ", " << yr3(1) << "\n" ; 
